@@ -78,6 +78,8 @@ Func ClickAtGameCenter_1920()
 		
 		Sleep(10000)
 		Send("{z down}") ; 按下Z键，使玩家处于趴下状态
+		Sleep(500)
+		Send("{z up}") ; 释放 F 键 
 		
 		MouseMove(160, 1015)
 		MouseClick("left", 160, 1015) 	;死亡返回大厅
@@ -108,6 +110,9 @@ Func ClickAtGameCenter_2560()
 		
 		Sleep(10000)
 		Send("{z down}") ; 按下Z键，使玩家处于趴下状态
+		Sleep(500)
+		Send("{z up}") ; 释放 F 键 
+		
 		
 		MouseMove(200, 1350)
 		MouseClick("left", 200, 1350) 	;死亡返回大厅
@@ -142,11 +147,11 @@ Func CreateGUI()
 	$btnAbout = GUICtrlCreateButton("使用帮助", 290, 180, 80, 30)  
     GUICtrlSetOnEvent(-1, "OpenAboutURL")
 	
-	$lblDescription = GUICtrlCreateEdit(""&@CRLF& "众所周知Pubg游戏中，单局游戏成活超过3分钟，"&@CRLF& _
-				""&@CRLF& "才结算通行证经验，所以工具的功能非常简单"&@CRLF& _
-				""&@CRLF& "点击开始游戏坐标，按F键跳伞，死亡后返回大厅"&@CRLF& _
-				""&@CRLF& "特别注意：此工具不会使你变得更强，"&@CRLF& _
+	$lblDescription = GUICtrlCreateEdit(""&@CRLF& "Pubg游戏中,单局游戏成活超过3分钟,才结算通行证经验"&@CRLF& _
+				""&@CRLF& "所以工具的功能非常简单,通过点击桌面坐标来实现"&@CRLF& _
+				""&@CRLF& "开始游戏,跳伞,返回大厅等.所以必须要适配分辨率"&@CRLF& _
 				""&@CRLF& "注意：目前支持2560*1440以及1920*1080分辨率"&@CRLF& _
+				""&@CRLF& "此工具不会使你变得更强,使用此工具的风险由您自己承担！"&@CRLF& _
 				"" ,20, 20, 347, 155)
 	
 	; 显示 GUI

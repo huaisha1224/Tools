@@ -2,8 +2,8 @@
 #AutoIt3Wrapper_Icon=favicon.ico
 #AutoIt3Wrapper_Res_Comment=自动肝Pubg通行证
 #AutoIt3Wrapper_Res_Description=自动肝Pubg通行证
-#AutoIt3Wrapper_Res_Fileversion=2024.12.09.1
-#AutoIt3Wrapper_Res_ProductVersion=1.1.2
+#AutoIt3Wrapper_Res_Fileversion=2024.12.11.1
+#AutoIt3Wrapper_Res_ProductVersion=1.1.3
 #AutoIt3Wrapper_Res_LegalCopyright=怀沙2049
 #AutoIt3Wrapper_Res_SaveSource=y
 #AutoIt3Wrapper_Res_requestedExecutionLevel=None
@@ -204,7 +204,7 @@ Func CreateGUI()
     Opt('GuiOneventmode', 1) ; 开启GUI事件驱动模式
 	;Opt("GUIEventOptions", 0)
     Global $hWnd
-    $hWnd = GUICreate("肝~肝~肝~通行证 1.1.2          	By:怀沙2049	", 450, 250,-1,-1)
+    $hWnd = GUICreate("肝~肝~肝~通行证 1.1.3          	By:怀沙2049	", 450, 250,-1,-1)
 	GUISetOnEvent($GUI_EVENT_CLOSE, "ExitApp")             ;注册窗口关闭事件到函数_Exit,必须添加这一行，否则关闭按钮会不能退出程序
 	GUISetIcon(@ScriptDir & "\favicon.ico") ; 假设 favicon.ico 与脚本位于同一目录下  
 	GUISetState(@SW_SHOW, $hWnd)

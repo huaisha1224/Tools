@@ -241,7 +241,7 @@ EndFunc
 
 Func OpenAboutURL()
 	;´ò¿ªUrlº¯Êý
-    ShellExecute('https://www.bilibili.com/video/BV1sByBYqEsT')
+    ShellExecute('https://www.bilibili.com/video/BV1f5qKY7EnL')
 EndFunc
 
 CreateGUI()

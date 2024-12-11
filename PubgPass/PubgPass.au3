@@ -2,8 +2,8 @@
 #AutoIt3Wrapper_Icon=favicon.ico
 #AutoIt3Wrapper_Res_Comment=自动肝Pubg通行证
 #AutoIt3Wrapper_Res_Description=自动肝Pubg通行证
-#AutoIt3Wrapper_Res_Fileversion=2024.11.11.1
-#AutoIt3Wrapper_Res_ProductVersion=1.0.7
+#AutoIt3Wrapper_Res_Fileversion=2024.12.09.1
+#AutoIt3Wrapper_Res_ProductVersion=1.1.2
 #AutoIt3Wrapper_Res_LegalCopyright=怀沙2049
 #AutoIt3Wrapper_Res_SaveSource=y
 #AutoIt3Wrapper_Res_requestedExecutionLevel=None
@@ -27,7 +27,13 @@
 #include <Array.au3>  
 #include <Json.au3>  ; 包含 Json.au3 库  
 
+#cs ----------------------------------------------------------------------------
+2024-11-14更新；	增加按快捷键Ctrl+Q退出程序的功能
+2024-11-29更新；	增加支持1920*1200的分辨率
+2024-11-30更新； 	修复2560*1440分辨率的开始按钮坐标不准确，导致会点击切换地图
+2024-12-06更新：	修复新版本游戏容易按到个人资料页面的问题，按2次ESC
 
+#ce ----------------------------------------------------------------------------
 
 
 Global $gameNames[5] = ["PUBG：绝地求生 "] ; 全局模式声明游戏名称列表
@@ -58,6 +64,10 @@ Func CheckResolution()
 	ElseIf @DesktopWidth == 2560 And @DesktopHeight == 1440 Then
 		MsgBox(1,'肝通行证',  '你的分辨率是：'&$DesktopWidth & '*' &$DesktopHeight& ' 即将开始'&@CRLF &"软件免费，自愿使用，风险自担")
 		ClickAtGameCenter_2560()
+	
+	ElseIf @DesktopWidth == 1920 And @DesktopHeight == 1200 Then
+		MsgBox(1,'肝通行证',  '你的分辨率是：'&$DesktopWidth & '*' &$DesktopHeight& ' 即将开始'&@CRLF &"软件免费，自愿使用，风险自担")
+		ClickAtGameCenter_1200()
 	Else
 		MsgBox(1,'肝通行证',  '你的分辨率是:'&$DesktopWidth & '*' &$DesktopHeight &' 暂不支持此该分辨率,可联系作者添加')
 	EndIf
@@ -89,8 +99,60 @@ Func ClickAtGameCenter_1920()
 		MouseClick("left", 855, 666) 	;确认返回
 		Sleep(10000)
 		
+		;按2次ESC按键，解决打开个人资料页面的问题
+		Send("{ESC down}") ; 按下ESC键，
+		Sleep(500)
+		Send("{ESC up}") ; 释放 ESC 键 
+		Sleep(500)
+		Send("{ESC down}") ; 按下ESC键，
+		Sleep(500)
+		Send("{ESC up}") ; 释放 ESC 键 
+		
 		MouseMove(160, 1015)
 		MouseClick("left", 160, 1015) 	;继续/关闭
+		Sleep(10000)
+	WEnd
+EndFunc
+
+
+
+Func ClickAtGameCenter_1200()
+	;通过X和Y坐标以及游戏窗口的宽度和高度计算点击位置并执行点击操作
+	;1920*1200分辨率
+	While 1 
+		MouseMove(250, 1030)
+		MouseClick("left", 250, 1030) 	;开始游戏按钮坐标
+		Sleep(10000)
+		
+		Send("{f down}") ; 保持 F 键按下
+		Sleep(500)
+		Send("{f up}") ; 释放 F 键 
+		
+		Sleep(10000)
+		Send("{z down}") ; 按下Z键，使玩家处于趴下状态
+		Sleep(500)
+		Send("{z up}") ; 释放 F 键 
+		
+		
+		MouseMove(200, 1130)
+		MouseClick("left", 200, 1130) 	;死亡返回大厅
+		Sleep(10000)
+		
+		MouseMove(840, 740)
+		MouseClick("left", 840, 740) 	;确认返回
+		Sleep(10000)
+		
+		;按2次ESC按键，解决打开个人资料页面的问题
+		Send("{ESC down}") ; 按下ESC键，
+		Sleep(500)
+		Send("{ESC up}") ; 释放 ESC 键 
+		Sleep(500)
+		Send("{ESC down}") ; 按下ESC键，
+		Sleep(500)
+		Send("{ESC up}") ; 释放 ESC 键 
+		
+		MouseMove(150, 1080)
+		MouseClick("left", 150, 1080) 	;继续/关闭
 		Sleep(10000)
 	WEnd
 EndFunc
@@ -122,6 +184,15 @@ Func ClickAtGameCenter_2560()
 		MouseClick("left", 1140, 890) 	;确认返回
 		Sleep(10000)
 		
+		;按2次ESC按键，解决打开个人资料页面的问题
+		Send("{ESC down}") ; 按下ESC键，
+		Sleep(500)
+		Send("{ESC up}") ; 释放 ESC 键 
+		Sleep(500)
+		Send("{ESC down}") ; 按下ESC键，
+		Sleep(500)
+		Send("{ESC up}") ; 释放 ESC 键 
+		
 		MouseMove(200, 1360)
 		MouseClick("left", 200, 1360) 	;继续/关闭
 		Sleep(10000)
@@ -133,30 +204,33 @@ Func CreateGUI()
     Opt('GuiOneventmode', 1) ; 开启GUI事件驱动模式
 	;Opt("GUIEventOptions", 0)
     Global $hWnd
-    $hWnd = GUICreate("肝~肝~肝~通行证 1.0.7          	By:怀沙2049	", 430, 220,-1,-1)
+    $hWnd = GUICreate("肝~肝~肝~通行证 1.1.2          	By:怀沙2049	", 450, 250,-1,-1)
 	GUISetOnEvent($GUI_EVENT_CLOSE, "ExitApp")             ;注册窗口关闭事件到函数_Exit,必须添加这一行，否则关闭按钮会不能退出程序
 	GUISetIcon(@ScriptDir & "\favicon.ico") ; 假设 favicon.ico 与脚本位于同一目录下  
 	GUISetState(@SW_SHOW, $hWnd)
     
-    $btnSelect = GUICtrlCreateButton("开始", 20, 180, 80, 30)
+    $btnSelect = GUICtrlCreateButton("开始", 20, 210, 80, 30)
     GUICtrlSetOnEvent(-1, "CheckResolution")
     
-    $btnExit = GUICtrlCreateButton("退出程序", 155, 180, 80, 30)
+    $btnExit = GUICtrlCreateButton("退出程序", 155, 210, 80, 30)
     GUICtrlSetOnEvent(-1, "ExitApp")
 	
-	$btnAbout = GUICtrlCreateButton("使用帮助", 290, 180, 80, 30)  
+	$btnAbout = GUICtrlCreateButton("使用帮助", 310, 210, 80, 30)  
     GUICtrlSetOnEvent(-1, "OpenAboutURL")
 	
 	$lblDescription = GUICtrlCreateEdit(""&@CRLF& "Pubg游戏中,单局游戏成活超过3分钟,才结算通行证经验"&@CRLF& _
 				""&@CRLF& "所以工具的功能非常简单,通过点击桌面坐标来实现"&@CRLF& _
 				""&@CRLF& "开始游戏,跳伞,返回大厅等.所以必须要适配分辨率"&@CRLF& _
-				""&@CRLF& "注意：目前支持2560*1440以及1920*1080分辨率"&@CRLF& _
-				""&@CRLF& "此工具不会使你变得更强,使用此工具的风险由您自己承担！"&@CRLF& _
-				"" ,20, 20, 347, 155)
+				""&@CRLF& "注意：目前支持2560*1440以及1920*1080/1200分辨率"&@CRLF& _
+				""&@CRLF& "退出快捷键：同时按 Alt+Q 即可退出客户端"&@CRLF& _
+				""&@CRLF& "此工具不会使你变得更强,使用此工具的风险由您自己承担"&@CRLF& _
+				"" ,20, 20, 367, 185)
 	
 	; 显示 GUI
     GUISetState(@SW_SHOW, $hWnd)
-	GetUpdateInfo('PubgPass')
+	
+	HotKeySet("!q", "ExitApp") 	; Alt + Q 退出程序 
+	GetUpdateInfo('PubgPass')	; 检查更新
 EndFunc
 
 Func ExitApp()
